@@ -23,21 +23,3 @@ A Japanese learning API built with Node.js, Express, and MongoDB — designed to
 
   
 
-YomuAPI/
-│
-├── src/
-│   ├── db/
-│   │   └── schema/
-│   │       ├── dictionary.js
-│   │       └── kanji.js
-│   ├── routes/
-│   │   ├── words.ts
-│   │   └── kanji.ts
-│   ├── data/
-│   │   └── (JSON, CSV, converter scripts)
-│   ├── server.ts
-│
-├── .env
-├── .gitignore
-├── package.json
-└── README.md
