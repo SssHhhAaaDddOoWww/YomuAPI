@@ -1,0 +1,1 @@
+{"root":["./src/index.ts","./src/db/db.ts","./src/db/redis/redis.ts","./src/db/schema/dictionary.ts","./src/db/schema/kanji.ts","./src/db/schema/story.ts","./src/routes/get.ts","./src/routes/getkanji.ts","./src/routes/story.ts"],"version":"5.9.3"}
