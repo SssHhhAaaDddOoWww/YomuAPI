@@ -2,6 +2,8 @@ import { Router } from "express";
  import { KanjiModel } from "../db/schema/kanji.js";
  import * as wanakana from "wanakana";
  import redis from "../db/redis/redis.js";
+import { configDotenv } from "dotenv";
+ configDotenv();
 
 const Kanji = Router();
 
@@ -43,8 +45,16 @@ Kanji.get("/search",async(req,res)=>{
         })
     }
     const kana = wanakana.toKana(q);
-    const key = `search:${kana.toLowerCase() || q.toLowerCase()}`;
-    const cache:any = await redis.get(key);
+          let cache:any;
+          let key;
+    try { 
+  
+         key = `search:${kana.toLowerCase() || q.toLowerCase()}`;
+     cache = await redis.get(key);
+    }catch(rediserror){
+        console.log("REDIS get error !!",rediserror)
+    }
+   
            if(cache){
          return   res.status(200).json({
                  result:JSON.parse(cache),
@@ -72,8 +82,12 @@ Kanji.get("/search",async(req,res)=>{
         })
       }
 
-      await redis.set(key,JSON.stringify(result), {ex:600});
-
+    if(process.env.NODE_ENV === "production"){
+        await redis.set(key, JSON.stringify(result), { ex: 600 });
+    }else{
+        await redis.set(key, JSON.stringify(result), { EX: 600 });
+    }
+    
 
 
    return res.status(200).json({

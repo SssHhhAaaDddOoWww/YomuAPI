@@ -26,7 +26,7 @@ redis = new UpstashRedis({
 
   redis = localRedis;
 }}catch(error){
-    console.log("error connecting to redis !!");
+    console.log("error connecting to redis!!")
 }
 
 export default redis;

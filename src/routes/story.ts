@@ -1,7 +1,9 @@
 import { Router } from "express";
 import { StoryModel } from "../db/schema/story.js";
 import redis from "../db/redis/redis.js";
+import { configDotenv } from "dotenv";
 const Story = Router();
+configDotenv();
 
 Story.get("/",async(req,res)=>{
     try { 
@@ -66,9 +68,12 @@ Story.get("/search",async(req,res)=>{
                 message: "could'nt find  in the collection !!"
             })
           }
-      await redis.set(key,JSON.stringify(result), {ex:600});
+           if(process.env.NODE_ENV === "production"){
+        await redis.set(key, JSON.stringify(result), { ex: 600 });
 
-    
+    }else{
+        await redis.set(key, JSON.stringify(result), { EX: 600 });
+    }
     
     
        return res.status(200).json({
