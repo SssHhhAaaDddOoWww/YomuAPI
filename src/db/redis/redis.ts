@@ -9,7 +9,7 @@ let redis: any;
 try {
 
 
-if(process.env.NODE_ENV === "production"){
+if(process.env.NODE_ENV === "prod"){
 redis = new UpstashRedis({
     url : process.env.UPSTASH_REDIS_REST_URL! ,
     token:process.env.UPSTASH_REDIS_REST_TOKEN!

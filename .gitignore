@@ -15,3 +15,4 @@ build/
 
 # local data
 data/
+tsconfig.tsbuildinfo
