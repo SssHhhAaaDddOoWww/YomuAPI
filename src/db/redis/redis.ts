@@ -1,32 +1,32 @@
-import { Redis as UpstashRedis } from "@upstash/redis";
-import { createClient } from "redis";
-import { configDotenv } from "dotenv";
-configDotenv();
+// import { Redis as UpstashRedis } from "@upstash/redis";
+// import { createClient } from "redis";
+// import { configDotenv } from "dotenv";
+// configDotenv();
 
 
 
-let redis: any;
-try {
+// let redis: any;
+// try {
 
 
-if(process.env.NODE_ENV === "prod"){
-redis = new UpstashRedis({
-    url : process.env.UPSTASH_REDIS_REST_URL! ,
-    token:process.env.UPSTASH_REDIS_REST_TOKEN!
+// if(process.env.NODE_ENV === "prod"){
+// redis = new UpstashRedis({
+//     url : process.env.UPSTASH_REDIS_REST_URL! ,
+//     token:process.env.UPSTASH_REDIS_REST_TOKEN!
 
-})
-}else{ 
+// })
+// }else{ 
     
 
-  const localRedis = createClient({ url: "redis://localhost:6379" });
+//   const localRedis = createClient({ url: "redis://localhost:6379" });
 
-  localRedis.on("error", (err) => console.error(" Redis Client Error:", err));
- localRedis.connect();
-  console.log("Connected to Local Redis");
+//   localRedis.on("error", (err) => console.error(" Redis Client Error:", err));
+//  localRedis.connect();
+//   console.log("Connected to Local Redis");
 
-  redis = localRedis;
-}}catch(error){
-    console.log("error connecting to redis!" )
-}
+//   redis = localRedis;
+// }}catch(error){
+//     console.log("error connecting to redis!" )
+// }
 
-export default redis;
+// export default redis;

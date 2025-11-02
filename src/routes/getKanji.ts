@@ -1,7 +1,6 @@
 import { Router } from "express";
  import { KanjiModel } from "../db/schema/kanji.js";
  import * as wanakana from "wanakana";
- import redis from "../db/redis/redis.js";
 import { configDotenv } from "dotenv";
  configDotenv();
 
@@ -45,22 +44,18 @@ Kanji.get("/search",async(req,res)=>{
         })
     }
     const kana = wanakana.toKana(q);
-          let cache:any;
-          let key;
-    try { 
+        
   
-         key = `search:${kana.toLowerCase() || q.toLowerCase()}`;
-     cache = await redis.get(key);
-    }catch(rediserror){
-        console.log("REDIS get error !!",rediserror)
-    }
+//        const  key = `search:${kana.toLowerCase() || q.toLowerCase()}`;
+//    const  cache:any = await redis.get(key);
+    
    
-           if(cache){
-         return   res.status(200).json({
-                 result:JSON.parse(cache),
-                 cached:true
-            })
-           }
+//            if(cache){
+//          return   res.status(200).json({
+//                  result:JSON.parse(cache),
+//                  cached:true
+//             })
+//            }
 
 
     const result = await KanjiModel.find({
@@ -82,18 +77,18 @@ Kanji.get("/search",async(req,res)=>{
         })
       }
 
-    if(process.env.NODE_ENV === "prod"){
-        await redis.set(key, JSON.stringify(result), { ex: 600 });
-    }else{
-        await redis.set(key, JSON.stringify(result), { EX: 600 });
-    }
+    // if(process.env.NODE_ENV === "prod"){
+        // await redis.set(key, JSON.stringify(result), { ex: 600 });
+    // }else{
+    //     await redis.set(key, JSON.stringify(result), { EX: 600 });
+    // }
     
 
 
    return res.status(200).json({
        kana,
         result,
-        cached:false
+        // cached:false
     })
 }catch(error){
   return  res.status(500).json({

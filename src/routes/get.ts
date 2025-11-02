@@ -1,6 +1,5 @@
 import { json, Router } from "express";
 import { DictModel } from "../db/schema/dictionary.js";
-import redis from "../db/redis/redis.js";
 import { configDotenv } from "dotenv";
 const Words = Router();
 configDotenv();
@@ -45,15 +44,15 @@ Words.get("/search",async(req,res)=>{
            message: "missing required query parameters"
         })
     }
-    const key = `search:${q.toLowerCase()}`
-    const cache:any =  await redis.get(key);
-    if(cache){
- return res.status(200).json({
-     result:JSON.parse(cache),
-     cached:true
- })
+//     const key = `search:${q.toLowerCase()}`
+//     const cache:any =  await redis.get(key);
+//     if(cache){
+//  return res.status(200).json({
+//      result:JSON.parse(cache),
+//      cached:true
+//  })
 
-    }
+//     }
     
 
 
@@ -72,20 +71,19 @@ Words.get("/search",async(req,res)=>{
             message: "could'nt find  in the collection !!"
         })
       }
-           if(process.env.NODE_ENV === "prod"){
-        await redis.set(key, JSON.stringify(result), { ex: 600 });
+        //    if(process.env.NODE_ENV === "prod"){
+        // await redis.set(key, JSON.stringify(result), { ex: 600 });
 
-    }else{
-        await redis.set(key, JSON.stringify(result), { EX: 600 });
-    }
+    // }else{
+    //     await redis.set(key, JSON.stringify(result), { EX: 600 });
+    // }
 
-    
 
 
 
    return res.status(200).json({
         result,
-        cached:false
+        // cached:false
     })
 }catch(error){
   return  res.status(500).json({
