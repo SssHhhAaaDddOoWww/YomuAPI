@@ -82,7 +82,7 @@ Kanji.get("/search",async(req,res)=>{
         })
       }
 
-    if(process.env.NODE_ENV === "production"){
+    if(process.env.NODE_ENV === "prod"){
         await redis.set(key, JSON.stringify(result), { ex: 600 });
     }else{
         await redis.set(key, JSON.stringify(result), { EX: 600 });

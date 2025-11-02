@@ -68,7 +68,7 @@ Story.get("/search",async(req,res)=>{
                 message: "could'nt find  in the collection !!"
             })
           }
-           if(process.env.NODE_ENV === "production"){
+           if(process.env.NODE_ENV === "prod"){
         await redis.set(key, JSON.stringify(result), { ex: 600 });
 
     }else{
