@@ -46,7 +46,7 @@ Story.get("/search",async(req,res)=>{
         const key = `search:${ q.toLowerCase()}`;
     const cache:any = await redis.get(key);
            if(cache){
-            res.status(200).json({
+          return  res.status(200).json({
                  result:JSON.parse(cache),
                  cached:true
             })

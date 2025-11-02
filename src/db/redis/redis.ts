@@ -6,6 +6,9 @@ configDotenv();
 
 
 let redis: any;
+try {
+
+
 if(process.env.NODE_ENV === "production"){
 redis = new UpstashRedis({
     url : process.env.UPSTASH_REDIS_REST_URL! ,
@@ -22,6 +25,8 @@ redis = new UpstashRedis({
   console.log("Connected to Local Redis");
 
   redis = localRedis;
+}}catch(error){
+    console.log("error connecting to redis !!");
 }
 
 export default redis;
