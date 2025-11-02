@@ -15,4 +15,4 @@ import Story from "./routes/story.js";
 
 
   connectDB();
- app.listen(process.env.PORT);
+ app.listen(process.env.PORT || 4000);
