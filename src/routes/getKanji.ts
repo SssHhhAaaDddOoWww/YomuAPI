@@ -44,7 +44,7 @@ Kanji.get("/search",async(req,res)=>{
     }
     const kana = wanakana.toKana(q);
     const key = `search:${kana.toLowerCase() || q.toLowerCase()}`;
-    const cache = await redis.get(key);
+    const cache:any = await redis.get(key);
            if(cache){
             res.status(200).json({
                  result:JSON.parse(cache),
@@ -72,7 +72,7 @@ Kanji.get("/search",async(req,res)=>{
         })
       }
 
-      await redis.setEx(key,600,JSON.stringify(result));
+      await redis.set(key,JSON.stringify(result), {ex:600});
 
 
 

@@ -45,7 +45,7 @@ Words.get("/search",async(req,res)=>{
         })
     }
     const key = `search:${q.toLowerCase()}`
-    const cache =  await redis.get(key);
+    const cache:any =  await redis.get(key);
     if(cache){
  return res.status(200).json({
      result:JSON.parse(cache),
@@ -71,7 +71,7 @@ Words.get("/search",async(req,res)=>{
             message: "could'nt find  in the collection !!"
         })
       }
-     await redis.setEx(key,600,JSON.stringify(result));
+      await redis.set(key,JSON.stringify(result), {ex:600});
 
 
    return res.status(200).json({
