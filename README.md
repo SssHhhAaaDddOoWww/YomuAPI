@@ -5,7 +5,7 @@ A Japanese learning API built with Node.js, Express, and MongoDB — designed to
  Features
 	•	📖 Dictionary API — Search for Japanese words by kanji, meaning, or reading.
 	•	漢字 Kanji API — Get kanji details including readings, meanings, stroke count, and JLPT level.
-	•	 Story API (coming soon) — Retrieve Japanese stories for reading practice.
+	•	 Story API  — Retrieve Japanese stories for reading practice.
 	•	 Random Endpoint — Fetch random words for quick quizzes or practice sessions.
 	•	 Pagination Support — Efficiently load large datasets page by page.
 	•	 Redis Caching (optional) — Improve performance for repeated queries.
