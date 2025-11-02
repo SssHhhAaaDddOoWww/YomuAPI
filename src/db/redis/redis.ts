@@ -21,12 +21,12 @@ redis = new UpstashRedis({
   const localRedis = createClient({ url: "redis://localhost:6379" });
 
   localRedis.on("error", (err) => console.error(" Redis Client Error:", err));
-  await localRedis.connect();
+ localRedis.connect();
   console.log("Connected to Local Redis");
 
   redis = localRedis;
 }}catch(error){
-    console.log("error connecting to redis!")
+    console.log("error connecting to redis!" )
 }
 
 export default redis;
