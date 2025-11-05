@@ -1,7 +1,9 @@
 import { Router } from "express";
 import { StoryModel } from "../db/schema/story.js";
+ import * as wanakana from "wanakana";
 import { configDotenv } from "dotenv";
 const Story = Router();
+
 configDotenv();
 
 Story.get("/",async(req,res)=>{
@@ -44,6 +46,8 @@ Story.get("/search",async(req,res)=>{
                message: "missing required query parameters"
             })
         } 
+            const kana = wanakana.toKana(q);
+        
     //     const key = `search:${ q.toLowerCase()}`;
     // const cache:any = await redis.get(key);
     //        if(cache){
@@ -58,7 +62,9 @@ Story.get("/search",async(req,res)=>{
         const result = await StoryModel.find({
             $or:[
                 {title_jp: {$regex: q ,$options:"i" }},
-                {title_romaji: {$regex: q ,$options:"i" }}
+                {title_jp: {$regex: kana ,$options:"i" }},
+                {title_romaji: {$regex: q ,$options:"i" }},
+                {title_romaji: {$regex: kana,$options:"i" }}
             ]
         } ).limit(5);
     
