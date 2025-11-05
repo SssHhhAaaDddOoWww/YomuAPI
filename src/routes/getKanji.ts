@@ -37,12 +37,14 @@ Kanji.get("/search",async(req,res)=>{
     try {
 
     
-    const q = req.query.q as string;
+    let q = req.query.q as string;
     if(!q){
       return  res.status(400).json({
            message: "missing required query parameters"
         })
     }
+             q = q.replace(/\s+/g, "").trim();
+
     const kana = wanakana.toKana(q);
         
   
